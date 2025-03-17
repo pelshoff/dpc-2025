@@ -1,0 +1,8 @@
+default:
+  suites:
+    company:
+      paths:
+        - "%paths.base%/modules/Company/tests/Feature"
+      contexts:
+        - Modules\Company\Tests\Feature\VerificationContext
+
