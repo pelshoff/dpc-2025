@@ -5,5 +5,5 @@ namespace Modules\Company;
 
 interface CompanyType
 {
-    public function verify(CompanyValidator $validator, array $officers);
+    public function verify(CompanyValidator $validator, array $officers): Outcome;
 }

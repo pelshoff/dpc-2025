@@ -6,6 +6,8 @@ namespace Modules\Company\Tests\Unit;
 use Modules\Company\CompaniesHouseClient;
 use Modules\Company\CompanyValidator;
 use Modules\Company\Officer;
+use Modules\Company\Outcomes\InReview;
+use Modules\Company\Outcomes\Rejected;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -22,7 +24,7 @@ final class CompanyValidatorTest extends TestCase
             ]
         ]);
         $officers = [new Officer('William of Orange'), new Officer('Not William of Orange')];
-        $this->assertFalse(new CompanyValidator($client)->verify('abc123', $officers));
+        $this->assertEquals(new Rejected(), new CompanyValidator($client)->verify('abc123', $officers));
     }
 
     #[Test]
@@ -39,6 +41,6 @@ final class CompanyValidatorTest extends TestCase
             ]
         ]);
         $officers = [new Officer('William of Orange'), new Officer('William of Gren')];
-        $this->assertEquals("maybe", new CompanyValidator($client)->verify('abc123', $officers));
+        $this->assertEquals(new InReview(), new CompanyValidator($client)->verify('abc123', $officers));
     }
 }

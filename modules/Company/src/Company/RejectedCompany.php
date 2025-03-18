@@ -1,9 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Modules\Company;
+namespace Modules\Company\Company;
 
-final readonly class RejectedCompany
+use Modules\Company\CompanyType;
+use Modules\Company\NotUnverifiedCompany;
+
+final readonly class RejectedCompany implements NotUnverifiedCompany
 {
     public function __construct(
         public string $name,
