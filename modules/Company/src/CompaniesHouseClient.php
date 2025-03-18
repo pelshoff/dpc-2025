@@ -7,5 +7,5 @@ interface CompaniesHouseClient
 {
     public function getCompanyProfile(string $companyNumber);
 
-    public function listOfficers(string $companyNumber);
+    public function listOfficers(string $companyNumber): array;
 }

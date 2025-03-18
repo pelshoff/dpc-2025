@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace Modules\Company;
 
-enum CompanyType
+interface CompanyType
 {
-    case SoleTrader;
-    case LimitedLiabilityCompany;
-    case LimitedLiabilityPartnership;
+    public function verify(CompanyValidator $validator, array $officers);
 }

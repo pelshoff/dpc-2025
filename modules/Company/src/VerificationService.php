@@ -10,12 +10,8 @@ final readonly class VerificationService
 
     }
 
-    public function verifyCompany(Company $company)
+    public function verifyCompany(UnverifiedCompany $company): VerifiedCompany|RejectedCompany
     {
-        if ($company->type === CompanyType::SoleTrader) {
-            return;
-        }
-        $this->companiesHouseClient->getCompanyProfile($company->registrationNumber);
-        $this->companiesHouseClient->listOfficers($company->registrationNumber);
+        return $company->verify(new CompanyValidator($this->companiesHouseClient));
     }
 }
