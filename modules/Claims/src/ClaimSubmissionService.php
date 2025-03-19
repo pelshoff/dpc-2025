@@ -29,10 +29,10 @@ final readonly class ClaimSubmissionService
         $this->repository->save($claim->estimate($estimate));
     }
 
-    public function balance(Ulid $id): Money
+    public function payOut(Ulid $id, Money $payOut)
     {
         $claim = $this->repository->get($id);
-        return $claim->balance();
+        $this->repository->save($claim->payOut($payOut));
     }
 
     public function settle(Ulid $id, Money $settlement): void
@@ -41,15 +41,21 @@ final readonly class ClaimSubmissionService
         $this->repository->save($claim->settle($settlement));
     }
 
+    public function reject(Ulid $id)
+    {
+        $claim = $this->repository->get($id);
+        $this->repository->save($claim->reject());
+    }
+
+    public function balance(Ulid $id): Money
+    {
+        $claim = $this->repository->get($id);
+        return $claim->balance();
+    }
+
     public function paidOut(Ulid $id): Money
     {
         $claim = $this->repository->get($id);
         return $claim->paidOut();
-    }
-
-    public function payOut(Ulid $id, Money $payOut)
-    {
-        $claim = $this->repository->get($id);
-        $this->repository->save($claim->payOut($payOut));
     }
 }

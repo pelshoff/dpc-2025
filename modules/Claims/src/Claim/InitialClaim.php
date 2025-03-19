@@ -24,6 +24,11 @@ final readonly class InitialClaim implements Claim
         );
     }
 
+    public function reject(): RejectedClaim
+    {
+        return new RejectedClaim($this->id, $this->description);
+    }
+
     public function balance(): Money
     {
         return Money::EUR(0);

@@ -45,4 +45,9 @@ final readonly class EstimatedClaim implements Claim
     {
         return new SettledClaim($this->id, $this->description, $settlement);
     }
+
+    public function reject(): RejectedClaim
+    {
+        return new RejectedClaim($this->id, $this->description);
+    }
 }

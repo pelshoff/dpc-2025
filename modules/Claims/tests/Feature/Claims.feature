@@ -16,3 +16,9 @@ Feature: Claims moneys
         When the claim is paid out early for 275
         Then the balance is 225
         And the paid out is 275
+
+    Scenario: Customer was not insured / not on cover
+        Given a claim was submitted
+        When the claim is rejected
+        Then the balance is 0
+        And the paid out is 0

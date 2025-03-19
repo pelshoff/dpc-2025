@@ -71,4 +71,29 @@ final class ClaimsTest extends TestCase
 
         $service->payOut($id, Money::EUR(101));
     }
+
+    #[Test]
+    public function can_be_rejected_after_initially(): void
+    {
+        $service = new ClaimSubmissionService(new InMemoryClaimsRepository());
+        $service->submit($id = new Ulid(), 'My car hit a fish');
+
+        $service->reject($id);
+
+        $this->assertEquals(Money::EUR(0), $service->balance($id));
+        $this->assertEquals(Money::EUR(0), $service->paidOut($id));
+    }
+
+    #[Test]
+    public function can_be_rejected_after_estimate(): void
+    {
+        $service = new ClaimSubmissionService(new InMemoryClaimsRepository());
+        $service->submit($id = new Ulid(), 'My car hit a fish');
+        $service->estimate($id, Money::EUR(1000));
+
+        $service->reject($id);
+
+        $this->assertEquals(Money::EUR(0), $service->balance($id));
+        $this->assertEquals(Money::EUR(0), $service->paidOut($id));
+    }
 }

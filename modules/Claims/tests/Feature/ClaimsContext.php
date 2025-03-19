@@ -51,6 +51,14 @@ final readonly class ClaimsContext implements Context
     }
 
     /**
+     * @When the claim is rejected
+     */
+    public function theClaimIsRejected()
+    {
+        $this->service->reject($this->claimId);
+    }
+
+    /**
      * @When the claim is paid out early for :amount
      */
     public function theClaimIsPaidOutEarlyFor(int $amount)
