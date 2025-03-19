@@ -7,11 +7,12 @@ use Modules\Company\Company\InReviewCompany;
 use Modules\Company\CompanyType;
 use Modules\Company\NotUnverifiedCompany;
 use Modules\Company\Outcome;
+use Symfony\Component\Uid\Ulid;
 
 final readonly class InReview implements Outcome
 {
-    public function processFor(string $name, string $tradingName, CompanyType $type, array $officers): NotUnverifiedCompany
+    public function processFor(Ulid $id, string $name, string $tradingName, CompanyType $type, array $officers): NotUnverifiedCompany
     {
-        return new InReviewCompany($name, $tradingName, $type, $officers);
+        return new InReviewCompany($id, $name, $tradingName, $type, $officers);
     }
 }

@@ -5,18 +5,20 @@ namespace Modules\Company;
 
 use Modules\Company\Company\InReviewCompany;
 use Modules\Company\Company\RejectedCompany;
-use Modules\Company\Company\UnverifiedCompany;
 use Modules\Company\Company\VerifiedCompany;
+use Symfony\Component\Uid\Ulid;
 
 final readonly class VerificationService
 {
-    public function __construct(private CompaniesHouseClient $companiesHouseClient)
+    public function __construct(private CompanyRepository $repository, private CompaniesHouseClient $companiesHouseClient)
     {
 
     }
 
-    public function verifyCompany(UnverifiedCompany $company): VerifiedCompany|RejectedCompany|InReviewCompany
+    public function verifyCompany(Ulid $id): void
     {
-        return $company->verify(new CompanyValidator($this->companiesHouseClient));
+        $company = $this->repository->get($id);
+        $newCompany = $company->verify(new CompanyValidator($this->companiesHouseClient));
+        $this->repository->save($newCompany);
     }
 }
