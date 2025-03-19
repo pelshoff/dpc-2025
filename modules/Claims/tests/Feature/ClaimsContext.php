@@ -51,6 +51,14 @@ final readonly class ClaimsContext implements Context
     }
 
     /**
+     * @When the claim is paid out early for :amount
+     */
+    public function theClaimIsPaidOutEarlyFor(int $amount)
+    {
+        $this->service->payOut($this->claimId, Money::EUR($amount));
+    }
+
+    /**
      * @Then the balance is :amount
      */
     public function iExpectTheBalanceToBe(int $amount)

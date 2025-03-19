@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Modules\Claims\Tests\Unit;
 
+use LogicException;
 use Modules\Claims\ClaimSubmissionService;
 use Modules\Claims\InMemoryClaimsRepository;
 use Money\Money;
@@ -44,5 +45,30 @@ final class ClaimsTest extends TestCase
 
         $this->assertEquals(Money::EUR(0), $service->balance($id));
         $this->assertEquals(Money::EUR(333), $service->paidOut($id));
+    }
+
+    #[Test]
+    public function can_be_paid_out(): void
+    {
+        $service = new ClaimSubmissionService(new InMemoryClaimsRepository());
+        $service->submit($id = new Ulid(), 'My car hit a fish');
+        $service->estimate($id, Money::EUR(1000));
+
+        $service->payOut($id, Money::EUR(333));
+
+        $this->assertEquals(Money::EUR(667), $service->balance($id));
+        $this->assertEquals(Money::EUR(333), $service->paidOut($id));
+    }
+
+    #[Test]
+    public function cannot_pay_out_more_than_reserved(): void
+    {
+        $service = new ClaimSubmissionService(new InMemoryClaimsRepository());
+        $service->submit($id = new Ulid(), 'My car hit a fish');
+        $service->estimate($id, Money::EUR(100));
+
+        $this->expectException(LogicException::class);
+
+        $service->payOut($id, Money::EUR(101));
     }
 }

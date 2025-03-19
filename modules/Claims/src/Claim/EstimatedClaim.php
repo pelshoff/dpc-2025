@@ -13,9 +13,9 @@ final readonly class EstimatedClaim implements Claim
         public Ulid $id,
         public string $description,
         public Money $estimate,
+        public Money $paidOut
     )
     {
-
     }
 
     public function balance(): Money
@@ -25,7 +25,20 @@ final readonly class EstimatedClaim implements Claim
 
     public function paidOut(): Money
     {
-        return $this->estimate->subtract($this->estimate);
+        return $this->paidOut;
+    }
+
+    public function payOut(Money $payOut): EstimatedClaim
+    {
+        if ($payOut->greaterThan($this->estimate)) {
+            throw new \LogicException('Cannot pay out more than reserved');
+        }
+        return new EstimatedClaim(
+            $this->id,
+            $this->description,
+            $this->estimate->subtract($payOut),
+            $this->paidOut->add($payOut)
+        );
     }
 
     public function settle(Money $settlement): SettledClaim

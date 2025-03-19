@@ -16,7 +16,12 @@ final readonly class InitialClaim implements Claim
 
     public function estimate(Money $estimate): EstimatedClaim
     {
-        return new EstimatedClaim($this->id, $this->description, $estimate);
+        return new EstimatedClaim(
+            $this->id,
+            $this->description,
+            $estimate,
+            $estimate->subtract($estimate)
+        );
     }
 
     public function balance(): Money

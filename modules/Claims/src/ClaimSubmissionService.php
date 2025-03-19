@@ -46,4 +46,10 @@ final readonly class ClaimSubmissionService
         $claim = $this->repository->get($id);
         return $claim->paidOut();
     }
+
+    public function payOut(Ulid $id, Money $payOut)
+    {
+        $claim = $this->repository->get($id);
+        $this->repository->save($claim->payOut($payOut));
+    }
 }
