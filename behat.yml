@@ -1,5 +1,10 @@
 default:
   suites:
+    claims:
+      paths:
+        - "%paths.base%/modules/Claims/tests/Feature"
+      contexts:
+        - Modules\Claims\Tests\Feature\ClaimsContext
     company:
       paths:
         - "%paths.base%/modules/Company/tests/Feature"

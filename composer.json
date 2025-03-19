@@ -8,7 +8,8 @@
     "require": {
         "php": "^8.4",
         "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10.1"
+        "laravel/tinker": "^2.10.1",
+        "money/money": "^2.0"
     },
     "require-dev": {
         "behat/behat": "^3.19",
@@ -25,6 +26,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
+            "Modules\\Claims\\": "modules/Claims/src",
             "Modules\\Company\\Infra\\": "modules/Company/infra",
             "Modules\\Company\\": "modules/Company/src"
         }
@@ -32,6 +34,7 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/",
+            "Modules\\Claims\\Tests\\": "modules/Claims/tests",
             "Modules\\Company\\Tests\\": "modules/Company/tests"
         }
     },
