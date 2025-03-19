@@ -1,4 +1,4 @@
-Feature: Claims moneys
+Feature: Claim funds management
     As a claims manager
     I want to record what I expect to and actually pay out for a claim
     So that I can prepare the business for the worst :-/
